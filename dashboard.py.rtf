@@ -1,0 +1,74 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2821
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 import streamlit as st\
+import pandas as pd\
+import matplotlib.pyplot as plt\
+import seaborn as sns\
+\
+# Placeholder: Simulated dataset\
+weeks = list(range(18, 45))\
+data = \{\
+    "Week": weeks,\
+    "Total_Revenue": [24000 + (i % 5) * 500 for i in weeks],\
+    "Customer_Counts": [3000 + (i % 7) * 100 for i in weeks],\
+    "Avg_Spend_Per_Customer": [8.00 + (i % 3) * 0.10 for i in weeks],\
+\}\
+df = pd.DataFrame(data)\
+\
+# Streamlit Dashboard\
+st.title("Spar Vlissingen Dashboard")\
+st.subheader("Overview of Weekly Trends")\
+\
+# Revenue and Customer Count Trends\
+st.write("### Weekly Revenue and Customer Count Trends")\
+fig, ax1 = plt.subplots(figsize=(10, 6))\
+ax1.plot(df['Week'], df['Total_Revenue'], label='Total Revenue (\'80)', marker='o')\
+ax1.set_xlabel("Week")\
+ax1.set_ylabel("Total Revenue (\'80)", color="blue")\
+ax1.tick_params(axis='y', labelcolor="blue")\
+\
+ax2 = ax1.twinx()\
+ax2.plot(df['Week'], df['Customer_Counts'], label='Customer Counts', color="orange", marker='s')\
+ax2.set_ylabel("Customer Counts", color="orange")\
+ax2.tick_params(axis='y', labelcolor="orange")\
+\
+fig.tight_layout()\
+st.pyplot(fig)\
+\
+# Average Spend Per Customer\
+st.write("### Average Spend Per Customer")\
+fig2, ax = plt.subplots(figsize=(10, 6))\
+ax.bar(df['Week'], df['Avg_Spend_Per_Customer'], color="green")\
+ax.set_xlabel("Week")\
+ax.set_ylabel("Avg Spend Per Customer (\'80)")\
+st.pyplot(fig2)\
+\
+# Simulated Peak Hour Heatmap\
+st.write("### Peak Hour Traffic (Simulated)")\
+heatmap_data = pd.DataFrame(\
+    [[50 + (i % 5) * 10 for i in range(7)] for _ in range(10)],\
+    columns=["12 PM", "1 PM", "2 PM", "3 PM", "4 PM", "5 PM", "6 PM"],\
+    index=[f"Week \{i\}" for i in range(18, 28)],\
+)\
+fig3, ax = plt.subplots(figsize=(10, 6))\
+sns.heatmap(heatmap_data, annot=True, fmt="d", cmap="coolwarm", ax=ax)\
+ax.set_title("Simulated Customer Traffic by Hour")\
+st.pyplot(fig3)\
+\
+# Recommendations Section\
+st.write("### Recommendations")\
+st.markdown(\
+    """\
+    - **Increase Staffing During Peak Hours:** Focus on 12 PM - 4 PM based on observed trends.\
+    - **Monitor Weekly Revenue Trends:** Address dips with promotional strategies.\
+    - **Enhance Customer Experience:** Use feedback to improve product availability and pricing.\
+    """\
+)\
+\
+st.write("---")\
+st.write("**Dashboard powered by Streamlit**")}
